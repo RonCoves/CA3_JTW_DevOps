@@ -20,7 +20,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-- stage: Build-Dev
+- stage: BuildDev
   displayName: Build and push to Dev
   jobs:
   - job: Build
@@ -49,7 +49,7 @@ stages:
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
 
-- stage: Build-Staging
+- stage: BuildStaging
   displayName: Build and push to Stage
   jobs:
   - job: Build
@@ -58,10 +58,11 @@ stages:
       # vmImage: $(vmImageName)
       name: default
     steps:
-    - task: ManualIntervention@8
+    - task: ManualValidation@0
       inputs:
-        instructions: 'Approve to deploy on Staging'
-        emailRecipients: 'indian.devopsguru@gmail.com'
+        notifyUsers: 'indian.devopsguru@gmail.com'
+        instructions: 'Approve to deploy to Staging'
+
 
     - task: AzureRmWebAppDeployment@4
       inputs:
