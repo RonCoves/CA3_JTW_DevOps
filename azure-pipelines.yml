@@ -49,19 +49,17 @@ stages:
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
 
-- stage: Approval
-  displayName: Approval for Stage Deployment
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      # vmImage: $(vmImageName)
-      name: default
+  - job: manual_approval
+    displayName: "Manual Approval"
+    dependsOn: terraform_init
+    pool: default
     steps:
     - task: ManualValidation@0
       timeoutInMinutes: 5
       inputs:
         instructions: "Hi, please validate"
+        notifyUsers: "indian.devopsguru@gmail.com"
+
 - stage: DeployStaging
   displayName: Build and push to Staging
   jobs:
