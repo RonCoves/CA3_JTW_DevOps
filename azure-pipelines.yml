@@ -51,7 +51,6 @@ stages:
 
   - job: manual_approval
     displayName: "Manual Approval"
-    dependsOn: terraform_init
     pool: default
     steps:
     - task: ManualValidation@0
