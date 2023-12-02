@@ -59,6 +59,7 @@ stages:
       name: default
     steps:
     - task: ManualValidation@0
+      timeoutInMinutes: 2
       inputs:
         notifyUsers: 'indian.devopsguru@gmail.com'
         instructions: 'Approve to deploy to Staging'
