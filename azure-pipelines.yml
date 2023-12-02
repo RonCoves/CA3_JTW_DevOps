@@ -49,8 +49,8 @@ stages:
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
 
-- stage: BuildStaging
-  displayName: Build and push to Stage
+- stage: Approval
+  displayName: Approval for Stage Deployment
   jobs:
   - job: Build
     displayName: Build
@@ -58,11 +58,19 @@ stages:
       # vmImage: $(vmImageName)
       name: default
     steps:
-    - task: ManualIntervention@8
+    - task: ManualValidation@0
+      timeoutInMinutes: 5
       inputs:
-        instructions: 'Approve to deploy on Stage'
-        emailRecipients: 'indian.devopsguru@gmail.com'
-
+        instructions: "Hi, please validate"
+- stage: DeployStaging
+  displayName: Build and push to Staging
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      # vmImage: $(vmImageName)
+      name: default
+    steps:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
