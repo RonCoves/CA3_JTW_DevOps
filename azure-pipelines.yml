@@ -58,12 +58,10 @@ stages:
       # vmImage: $(vmImageName)
       name: default
     steps:
-    - task: ManualValidation@0
-      timeoutInMinutes: 2
+    - task: ManualIntervention@8
       inputs:
-        notifyUsers: 'indian.devopsguru@gmail.com'
-        instructions: 'Approve to deploy to Staging'
-
+        instructions: 'Approve to deploy on Stage'
+        emailRecipients: 'indian.devopsguru@gmail.com'
 
     - task: AzureRmWebAppDeployment@4
       inputs:
