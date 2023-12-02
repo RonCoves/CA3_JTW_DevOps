@@ -53,7 +53,7 @@ stages:
     displayName: "Manual Approval"
     pool: default
     steps:
-    - task: ManualValidation@0
+    - task: ManualIntervention@8
       timeoutInMinutes: 5
       inputs:
         instructions: "Hi, please validate"
