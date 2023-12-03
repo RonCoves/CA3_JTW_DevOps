@@ -49,15 +49,15 @@ stages:
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
 
-  - job: manual_approval
-    displayName: "Manual Approval"
-    pool: default
-    steps:
-    - task: ManualIntervention@8
-      timeoutInMinutes: 5
-      inputs:
-        instructions: "Hi, please validate"
-        notifyUsers: "indian.devopsguru@gmail.com"
+  # - job: manual_approval
+  #   displayName: "Manual Approval"
+  #   pool: default
+  #   steps:
+  #   - task: ManualIntervention@8
+  #     timeoutInMinutes: 5
+  #     inputs:
+  #       instructions: "Hi, please validate"
+  #       notifyUsers: "indian.devopsguru@gmail.com"
 
 - stage: DeployStaging
   displayName: Build and push to Staging
