@@ -52,11 +52,9 @@ stages:
   - job: ManualValidation
     displayName: Manual Validation
     dependsOn: Build
-    pool:
-      vmImage: $(vmImageName)
+    pool: server
     steps:
     - task: ManualValidation@0
-      version: 0.2 
       inputs:
         notifyUsers: 'X00204989@myTUDublin.ie'
         instructions: "Hi, please validate"
