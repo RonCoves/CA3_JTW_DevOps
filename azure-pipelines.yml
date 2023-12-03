@@ -48,12 +48,18 @@ stages:
         DockerNamespace: 'journeytowalk.azurecr.io'
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
+        
+  - job: ManualValidation
+    displayName: Manual Validation
+    dependsOn: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
     - task: ManualValidation@0
       inputs:
         notifyUsers: 'X00204989@myTUDublin.ie'
         instructions: "Hi, please validate"
         onTimeout: resume
-        
   # - job: manual_approval
   #   displayName: "Manual Approval"
   #   pool: default
