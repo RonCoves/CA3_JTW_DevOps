@@ -57,17 +57,8 @@ stages:
     - task: ManualValidation@0
       inputs:
         notifyUsers: 'X00204989@myTUDublin.ie'
-        instructions: "Hi, please validate"
-        onTimeout: resume
-  # - job: manual_approval
-  #   displayName: "Manual Approval"
-  #   pool: default
-  #   steps:
-  #   - task: ManualIntervention@8
-  #     timeoutInMinutes: 5
-  #     inputs:
-  #       instructions: "Hi, please validate"
-  #       notifyUsers: "indian.devopsguru@gmail.com"
+        instructions: "Hi, please validate for Staging"
+
 
 - stage: DeployStaging
   displayName: Build and push to Staging
@@ -75,8 +66,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      # vmImage: $(vmImageName)
-      name: default
+      vmImage: $(vmImageName)
     steps:
     - task: AzureRmWebAppDeployment@4
       inputs:
@@ -84,6 +74,33 @@ stages:
         azureSubscription: 'Azure for Students (9298de21-cef6-4f5a-8ba7-9f3bfad1ddf0)'
         appType: 'webAppContainer'
         WebAppName: 'stagingJourneytoWork'
+        DockerNamespace: 'journeytowalk.azurecr.io'
+        DockerRepository: 'journeytoworkca'
+        DockerImageTag: '$(Build.BuildId)'
+
+  - job: ManualValidation
+    displayName: Manual Validation
+    dependsOn: Build
+    pool: server
+    steps:
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: 'X00204989@myTUDublin.ie'
+        instructions: "Hi, please validate for production"
+- stage: DeployProduction
+  displayName: Build and push to Production
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure for Students (9298de21-cef6-4f5a-8ba7-9f3bfad1ddf0)'
+        appType: 'webAppContainer'
+        WebAppName: 'JourneytoWork'
         DockerNamespace: 'journeytowalk.azurecr.io'
         DockerRepository: 'journeytoworkca'
         DockerImageTag: '$(Build.BuildId)'
